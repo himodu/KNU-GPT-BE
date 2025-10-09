@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/knugpt?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimezone=false
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 1234
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: guny08288@gmail.com
+    password: uqnx tdqs ckrr jizb
+    properties:
+      mail:
+        starttls:
+          enable: true
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+
+logging:
+  level:
+    org.hibernate:
+      type.descriptor.sql: trace
+      SQL: DEBUG
+
+jwt:
+  secret: "DLbuFF+XhYWRCzk7QFmob8DDUosRZRfln8XGytbEGcAcmpcU/++KO3wBTuDG4g6k3p3LpMJxA2CUivG6YpkLzQ=="
+
+
+
+
+

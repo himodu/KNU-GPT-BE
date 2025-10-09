@@ -1,11 +1,11 @@
 package com.knugpt.knugpt.domain.auth.redis;
 
 import com.knugpt.knugpt.global.constant.Constants;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 @Getter
@@ -14,10 +14,9 @@ import org.springframework.data.redis.core.RedisHash;
 public class EmailValidation {
     @Id
     private String email;
+
     private String code;
-
     private Integer tryCnt;
-
     private Boolean isValid;
 
     public static EmailValidation of(String email, String code) {

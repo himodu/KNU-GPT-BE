@@ -70,6 +70,7 @@ public class AuthService{
         //2. 인증 임시 저장값에 성공 여부 갱신
         if (isValidEmail(request.code(), validation)) {
             validation.validationUpdate(true);
+            emailValidationRepository.save(validation);
 
         } else {
             // 인증 시도 횟수 +1
@@ -86,7 +87,12 @@ public class AuthService{
 
     public void signup(UserSignupRequest request) {
         //1. 인증 임시 저장값의 이메일과 대조 후 임시 저장값 삭제
-        //TODO - 로직 구현 해야됨
+        EmailValidation validation = emailValidationRepository.findById(request.email())
+                .orElseThrow(() -> new CommonException(ErrorCode.EMAIL_NOT_VALID));
+
+        if (!validation.getIsValid()) {
+            throw new CommonException(ErrorCode.EMAIL_NOT_VALID);
+        }
 
         //2. 회원 정보 생성 및 저장
         userRepository.save(
@@ -94,14 +100,19 @@ public class AuthService{
                         .email(request.email())
                         .password(passwordEncoder.encode(request.password()))
                         .nickname(request.nickname())
-                        .profileImageUrl(request.profileImageLink())
+                        .major(request.major())
+                        .score(request.score())
+                        .introduction(request.introduction())
+                        .status(request.status())
                         .role(UserRole.USER)
-                        .provider(Provider.KAKAO)
                         .build()
                 );
     }
 
     public AccountLoginResponse login(UserLoginRequest loginRequestDto) {
+        if (!userRepository.existsByEmail(loginRequestDto.email())) {
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
 
         // 인증
         Authentication authentication = authenticationManager.authenticate(

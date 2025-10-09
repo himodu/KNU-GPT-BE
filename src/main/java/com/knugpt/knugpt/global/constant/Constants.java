@@ -10,6 +10,8 @@ public class Constants {
     public static Integer EMAIL_VALIDATE_LIMIT = 5;
 
     public static List<String> NO_NEED_AUTH_URLS = List.of(
+            "/api/v1/auth/email/code",
+            "/api/v1/auth/email/validation",
             "/api/v1/auth/signup",
             "/api/v1/auth/login",
             "/api/v1/auth/token/refresh",

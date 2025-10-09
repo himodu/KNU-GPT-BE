@@ -1,9 +1,9 @@
 package com.knugpt.knugpt.global.common;
 
+import com.knugpt.knugpt.global.exception.ErrorCode;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotNull;
-import knu.fest.knu.fest.global.exception.ErrorCode;
 import lombok.Getter;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -1,6 +1,7 @@
 package com.knugpt.knugpt.global.security.config;
 
 
+import com.knugpt.knugpt.domain.auth.repository.AuthRepository;
 import com.knugpt.knugpt.global.constant.Constants;
 import com.knugpt.knugpt.global.security.filter.JwtAuthenticationFilter;
 import com.knugpt.knugpt.global.security.filter.JwtExceptionFilter;
@@ -34,6 +35,7 @@ import java.util.List;
 public class SecurityConfig {
 
     private JwtTokenProvider jwtTokenProvider;
+    private AuthRepository authRepository;
 
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -53,7 +55,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthorizationFilter() {
-        return new JwtAuthenticationFilter(jwtTokenProvider);
+        return new JwtAuthenticationFilter(jwtTokenProvider, authRepository);
     }
 
     @Bean

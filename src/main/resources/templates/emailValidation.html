@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>KNU-GPT 이메일 인증</title>
+</head>
+<body style="font-family:'Noto Sans KR',sans-serif;background-color:#f4f6fa;margin:0;padding:0;">
+<div style="width:100%;max-width:480px;margin:40px auto;background-color:#ffffff;border-radius:12px;
+            box-shadow:0 4px 16px rgba(0,0,0,0.08);overflow:hidden;">
+
+    <!-- HEADER -->
+    <div style="background-color:#DA2127;color:#fff;padding:24px 0;text-align:center;
+                font-size:22px;font-weight:700;letter-spacing:0.5px;">
+        KNU-GPT 이메일 인증
+    </div>
+
+    <!-- CONTENT -->
+    <div style="padding:32px 24px;color:#333;text-align:center;">
+        <p style="margin-bottom:20px;font-size:15px;line-height:1.6;">
+            안녕하세요 👋<br>
+            KNU-GPT 회원가입을 위해 아래의 인증 코드를 입력해주세요.
+        </p>
+
+        <div style="display:inline-block;background-color:#F7D2D2;border:2px dashed #DA2127;border-radius:8px;
+                    padding:16px 28px;font-size:28px;letter-spacing:6px;font-weight:600;color:#DA2127;margin:12px 0;"
+             th:text="${code}">
+            1234
+        </div>
+
+        <p style="margin-top:20px;font-size:14px;line-height:1.6;">
+            이 인증 코드는 발송 후 <b>3분간만 유효</b>합니다.<br>
+            만약 요청하지 않은 메일이라면, 본 메일을 무시하셔도 됩니다.
+        </p>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="text-align:center;font-size:13px;color:#777;padding:20px;border-top:1px solid #eee;">
+        © 2025 KNU-GPT. All rights reserved.
+    </div>
+</div>
+</body>
+</html>

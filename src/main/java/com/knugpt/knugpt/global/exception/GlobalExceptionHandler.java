@@ -5,6 +5,7 @@ import com.knugpt.knugpt.global.common.ResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,22 @@ public class GlobalExceptionHandler {
                 e.getMessage());
 
         return ResponseDto.fail(e);
+    }
+
+    @ExceptionHandler(value = {BadCredentialsException.class})
+    public ResponseDto<?> handleBadCredentialException(BadCredentialsException e, HttpServletRequest req) {
+        String requestMethod = req.getMethod();
+        String requestURI = req.getRequestURI();
+
+        log.error("GlobalExceptionHandler catch BadCredentialsException By User(id:{}) When [{}] {} In [{}] At {} : {}",
+                getUserName(),
+                requestMethod,
+                requestURI,
+                getMethodName(e),
+                getLineNumber(e),
+                e.getMessage());
+
+        return ResponseDto.fail(new CommonException(ErrorCode.INVALID_PASSWORD));
     }
 
     // 서버, DB 예외

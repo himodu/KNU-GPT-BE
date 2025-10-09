@@ -27,7 +27,7 @@ public class EmailUtil {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject("[KNU-GPT] 이메일 인증 코드입니다.");
-            mimeMessageHelper.setText(setContext("code", validateCode), true);
+            mimeMessageHelper.setText(setContext("emailValidation", validateCode), true);
 
             sendMail(mimeMessage);
 

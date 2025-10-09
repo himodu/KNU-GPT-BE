@@ -30,6 +30,7 @@ public enum ErrorCode {
     EMAIL_NOT_VALID(40304, HttpStatus.FORBIDDEN, "이메일이 인증되지 않았습니다."),
     EMAIL_CODE_NOT_VALID(40305, HttpStatus.FORBIDDEN, "이메일 인증코드가 일치하지 않습니다."),
     EMAIL_VALIDATE_LIMIT_OVER(40306, HttpStatus.FORBIDDEN, "이메일 인증 요청 가능 횟수 5회를 초과했습니다."),
+    INVALID_PASSWORD(40307, HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다."),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),

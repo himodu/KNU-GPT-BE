@@ -34,8 +34,8 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private JwtTokenProvider jwtTokenProvider;
-    private AuthRepository authRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AuthRepository authRepository;
 
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;

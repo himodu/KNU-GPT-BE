@@ -1,5 +1,6 @@
 package com.knugpt.knugpt.domain.user.entity;
 
+import com.knugpt.knugpt.domain.user.dto.request.UserInfoUpdateRequest;
 import com.knugpt.knugpt.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -46,5 +47,13 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private UserRole role;
 
+
+    public void updateFromRequest(UserInfoUpdateRequest request) {
+        this.nickname = request.nickname();
+        this.major = request.major();
+        this.score = request.score();
+        this.introduction = request.introduction();
+        this.status = request.status();
+    }
 
 }

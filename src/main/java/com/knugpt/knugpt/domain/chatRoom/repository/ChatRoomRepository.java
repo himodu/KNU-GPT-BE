@@ -1,6 +1,6 @@
-package com.knugpt.knugpt.domain.chat.repository;
+package com.knugpt.knugpt.domain.chatRoom.repository;
 
-import com.knugpt.knugpt.domain.chat.entity.ChatRoom;
+import com.knugpt.knugpt.domain.chatRoom.entity.ChatRoom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +13,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     Page<ChatRoom> findAllByUserId(Long userId, Pageable pageable);
 
     Optional<ChatRoom> findByIdAndUserId(Long chatRoomId, Long userId);
+
+    boolean existsByIdAndUserId(Long chatRoomId, Long userId);
 }

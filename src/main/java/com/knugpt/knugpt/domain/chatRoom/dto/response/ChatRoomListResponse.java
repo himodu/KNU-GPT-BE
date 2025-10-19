@@ -1,9 +1,8 @@
-package com.knugpt.knugpt.domain.chat.dto.response;
+package com.knugpt.knugpt.domain.chatRoom.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.knugpt.knugpt.domain.chat.entity.ChatRoom;
+import com.knugpt.knugpt.domain.chatRoom.entity.ChatRoom;
 import com.knugpt.knugpt.global.common.PageInfo;
 import com.knugpt.knugpt.global.common.SelfValidating;
 import io.swagger.v3.oas.annotations.media.Schema;

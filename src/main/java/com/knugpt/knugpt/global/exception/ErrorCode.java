@@ -11,9 +11,7 @@ public enum ErrorCode {
     // Not Found Error
     NOT_FOUND_END_POINT(40400, HttpStatus.NOT_FOUND, "존재하지 않는 API 엔드포인트입니다."),
     NOT_FOUND_USER(40401, HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다."),
-    NOT_FOUND_POST(40402, HttpStatus.NOT_FOUND, "존재하지 않는 게시물입니다."),
-    NOT_FOUND_LIKE(40403, HttpStatus.NOT_FOUND, "존재하지 않는 좋아요입니다."),
-    NOT_FOUND_PLACE(40403, HttpStatus.NOT_FOUND, "존재하지 않는 건물입니다."),
+    NOT_FOUND_CHAT_ROOM(40402, HttpStatus.NOT_FOUND, "존재하지 않는 채팅방입니다."),
 
     // Invalid Argument Error
     INVALID_HEADER_ERROR(40000, HttpStatus.BAD_REQUEST, "유효하지 않은 헤더입니다."),
@@ -34,7 +32,8 @@ public enum ErrorCode {
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),
-    EMAIL_SEND_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "이메일 전송 오류입니다.")
+    EMAIL_SEND_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "이메일 전송 오류입니다."),
+    INTERNAL_DATA_ERROR(50002, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 데이터 에러입니다."),
     ;
 
     private final Integer code;

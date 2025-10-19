@@ -19,6 +19,10 @@ spring:
       port: 6379
       password: 1234
 
+    mongodb:
+      uri: mongodb://localhost:27017/knugpt
+      database: knugpt
+
   mail:
     host: smtp.gmail.com
     port: 587

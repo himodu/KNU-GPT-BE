@@ -27,6 +27,20 @@ services:
     networks:
       - knu-gpt-net
 
+  mongodb:
+    image: mongo:6.0
+    container_name: mongo_knugpt
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: knugpt
+      TZ: Asia/Seoul
+    volumes:
+      - /volumes/mongo:/data/db
+    networks:
+      - knu-gpt-net
+
   backend-app:
     build:
       context: .
@@ -37,10 +51,10 @@ services:
       - redis
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/knugpt?useSSL=false&allowPublicKeyRetrieval=true
-      - SPRING_REDIS_HOST=redis
-      - SPRING_REDIS_PORT=6379
-      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+      - SPRING_DATA_REDIS_PASSWORD=${REDIS_PASSWORD}
+      - SPRING_DATA_MONGODB_PASSWORD=${MONGODB_PASSWORD}
     networks:
       - knu-gpt-net
 

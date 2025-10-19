@@ -1,4 +1,4 @@
-package com.knugpt.knugpt.domain.chat.entity;
+package com.knugpt.knugpt.domain.chatRoom.entity;
 
 import com.knugpt.knugpt.domain.user.entity.User;
 import com.knugpt.knugpt.global.common.BaseEntity;

@@ -1,11 +1,11 @@
-package com.knugpt.knugpt.domain.chat.controller;
+package com.knugpt.knugpt.domain.chatRoom.controller;
 
 
-import com.knugpt.knugpt.domain.chat.dto.request.ChatRoomCreateRequest;
-import com.knugpt.knugpt.domain.chat.dto.request.ChatRoomTitleUpdateRequest;
-import com.knugpt.knugpt.domain.chat.dto.response.ChatRoomCreatedResponse;
-import com.knugpt.knugpt.domain.chat.dto.response.ChatRoomListResponse;
-import com.knugpt.knugpt.domain.chat.service.ChatRoomService;
+import com.knugpt.knugpt.domain.chatRoom.dto.request.ChatRoomCreateRequest;
+import com.knugpt.knugpt.domain.chatRoom.dto.request.ChatRoomTitleUpdateRequest;
+import com.knugpt.knugpt.domain.chatRoom.dto.response.ChatRoomCreatedResponse;
+import com.knugpt.knugpt.domain.chatRoom.dto.response.ChatRoomListResponse;
+import com.knugpt.knugpt.domain.chatRoom.service.ChatRoomService;
 import com.knugpt.knugpt.global.annotation.UserId;
 import com.knugpt.knugpt.global.common.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;

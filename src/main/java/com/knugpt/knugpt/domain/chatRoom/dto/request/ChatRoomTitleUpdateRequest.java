@@ -1,9 +1,7 @@
-package com.knugpt.knugpt.domain.chat.dto.request;
+package com.knugpt.knugpt.domain.chatRoom.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record ChatRoomTitleUpdateRequest(

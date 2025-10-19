@@ -1,11 +1,11 @@
-package com.knugpt.knugpt.domain.chat.service;
+package com.knugpt.knugpt.domain.chatRoom.service;
 
-import com.knugpt.knugpt.domain.chat.dto.request.ChatRoomCreateRequest;
-import com.knugpt.knugpt.domain.chat.dto.request.ChatRoomTitleUpdateRequest;
-import com.knugpt.knugpt.domain.chat.dto.response.ChatRoomCreatedResponse;
-import com.knugpt.knugpt.domain.chat.dto.response.ChatRoomListResponse;
-import com.knugpt.knugpt.domain.chat.entity.ChatRoom;
-import com.knugpt.knugpt.domain.chat.repository.ChatRoomRepository;
+import com.knugpt.knugpt.domain.chatRoom.dto.request.ChatRoomCreateRequest;
+import com.knugpt.knugpt.domain.chatRoom.dto.request.ChatRoomTitleUpdateRequest;
+import com.knugpt.knugpt.domain.chatRoom.dto.response.ChatRoomCreatedResponse;
+import com.knugpt.knugpt.domain.chatRoom.dto.response.ChatRoomListResponse;
+import com.knugpt.knugpt.domain.chatRoom.entity.ChatRoom;
+import com.knugpt.knugpt.domain.chatRoom.repository.ChatRoomRepository;
 import com.knugpt.knugpt.domain.user.entity.User;
 import com.knugpt.knugpt.domain.user.repository.UserRepository;
 import com.knugpt.knugpt.global.exception.CommonException;
@@ -16,8 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

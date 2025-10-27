@@ -54,11 +54,11 @@ jobs:
     steps:
       # 1. 최신 이미지를 풀받습니다
       - name: Pull Server Image
-        run: sudo docker-compose pull backend-app
+        run: sudo docker compose pull backend-app
 
       # 2. docker-compose 실행
       - name: Restart Server Docker Container
-        run: sudo docker-compose up -d backend-app
+        run: sudo docker compose up -d backend-app
 
       # 3. 안쓰는 이미지 제거
       - name: Remove Unused Docker images

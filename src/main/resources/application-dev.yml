@@ -1,13 +1,13 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/pium?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimezone=false
-    username: root
-    password: ${MYSQL_ROOT_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${SPRING_DATASOURCE_DDL_AUTO}
     properties:
       hibernate:
         format_sql: true
@@ -17,6 +17,25 @@ spring:
     redis:
       host: redis
       port: 6379
+
+    mongodb:
+      uri: mongodb://mongodb:27017/knugpt
+      database: ${MONGO_DATABASE}
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        starttls:
+          enable: true
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
 
 logging:
   level:

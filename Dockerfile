@@ -5,7 +5,7 @@ COPY . .
 RUN gradle clean build -x test
 
 # 2️⃣ 실행 스테이지
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]

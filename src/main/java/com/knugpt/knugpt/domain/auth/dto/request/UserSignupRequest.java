@@ -38,7 +38,7 @@ public record UserSignupRequest(
         @Schema(description = "사용자의 자기 소개")
         String introduction,
 
-        @NotBlank(message = "사용자 재학여부는 필수 항목입니다.")
+        @NotNull(message = "사용자 재학여부는 필수 항목입니다.")
         @Schema(description = "사용자의 재학여부")
         UserStatus status
 ) {

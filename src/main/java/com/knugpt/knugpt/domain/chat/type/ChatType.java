@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ChatType {
-    QUESTION("QUESTION"),
-    ANSWER("ANSWER")
+    USER("USER"),
+    CHATBOT("CHATBOT")
     ;
 
     private final String value;

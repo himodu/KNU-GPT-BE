@@ -4,7 +4,6 @@ import com.knugpt.knugpt.domain.chat.dto.request.ChatQueryRequest;
 import com.knugpt.knugpt.domain.chat.dto.response.AnswerChatResponse;
 import com.knugpt.knugpt.domain.chat.dto.response.ChatListResponse;
 import com.knugpt.knugpt.domain.chat.service.ChatService;
-import com.knugpt.knugpt.domain.chatRoom.dto.response.ChatRoomListResponse;
 import com.knugpt.knugpt.global.annotation.UserId;
 import com.knugpt.knugpt.global.common.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +31,6 @@ public class ChatController {
             @Parameter(hidden = true) @UserId Long userId,
             @PathVariable("chatRoomId") Long chatRoomId,
             @Valid @RequestBody ChatQueryRequest request
-
     ) {
         return ResponseDto.ok(chatService.queryToChatBot(userId, chatRoomId, request));
     }

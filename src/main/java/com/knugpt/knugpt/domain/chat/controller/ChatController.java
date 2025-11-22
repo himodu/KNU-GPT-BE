@@ -1,10 +1,9 @@
 package com.knugpt.knugpt.domain.chat.controller;
 
 import com.knugpt.knugpt.domain.chat.dto.request.ChatQueryRequest;
-import com.knugpt.knugpt.domain.chat.dto.response.AnswerChatResponse;
+import com.knugpt.knugpt.domain.chat.dto.response.ChatAnswerResponse;
 import com.knugpt.knugpt.domain.chat.dto.response.ChatListResponse;
 import com.knugpt.knugpt.domain.chat.service.ChatService;
-import com.knugpt.knugpt.domain.chatRoom.dto.response.ChatRoomListResponse;
 import com.knugpt.knugpt.global.annotation.UserId;
 import com.knugpt.knugpt.global.common.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,20 +20,33 @@ public class ChatController {
     private final ChatService chatService;
 
     @Operation(
-            summary = "챗봇에게 채팅을 전송합니다.",
-            description = "챗봇에게 채팅을 전송합니다.",
+            summary = "[회원] 챗봇에게 채팅을 전송합니다.",
+            description = "[회원] 챗봇에게 채팅을 전송합니다.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "챗봇에게 응답 수신 성공"),
             }
     )
     @PostMapping("/chat-rooms/{chatRoomId}/chats")
-    public ResponseDto<AnswerChatResponse> queryToChatBot(
+    public ResponseDto<ChatAnswerResponse> queryToChatBotByUser(
             @Parameter(hidden = true) @UserId Long userId,
             @PathVariable("chatRoomId") Long chatRoomId,
             @Valid @RequestBody ChatQueryRequest request
-
     ) {
-        return ResponseDto.ok(chatService.queryToChatBot(userId, chatRoomId, request));
+        return ResponseDto.ok(chatService.queryToChatBotByUser(userId, chatRoomId, request));
+    }
+
+    @Operation(
+            summary = "[비회원] 챗봇에게 채팅을 전송합니다.",
+            description = "[비회원] 챗봇에게 채팅을 전송합니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "챗봇에게 응답 수신 성공"),
+            }
+    )
+    @PostMapping("/chats")
+    public ResponseDto<ChatAnswerResponse> queryToChatBot(
+            @Valid @RequestBody ChatQueryRequest request
+    ) {
+        return ResponseDto.ok(chatService.queryToChatBotByNotUser(request));
     }
 
 
@@ -54,7 +66,5 @@ public class ChatController {
     ) {
         return ResponseDto.ok(chatService.getChats(userId, chatRoomId, page, size));
     }
-
-
 
 }

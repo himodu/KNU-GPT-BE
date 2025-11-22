@@ -14,7 +14,7 @@ import lombok.Getter;
 public class ChatRoomCreatedResponse extends SelfValidating<ChatRoomCreatedResponse> {
     @NotNull
     @Schema(description = "채팅방의 PK")
-    Long chatRoomId;
+    private final Long chatRoomId;
 
 
     @Builder

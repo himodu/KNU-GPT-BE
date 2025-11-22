@@ -37,9 +37,9 @@ public class Chat {
         this.chatRoomId = chatRoomId;
     }
 
-    public static Chat questionOf(Long userId, Long chatRoomId, String question) {
+    public static Chat userOf(Long userId, Long chatRoomId, String question) {
         return Chat.builder()
-                .type(ChatType.QUESTION)
+                .type(ChatType.USER)
                 .data(
                         QuestionChatData.builder()
                                 .userId(userId)
@@ -51,9 +51,9 @@ public class Chat {
                 .build();
     }
 
-    public static Chat answerOf(Long chatRoomId, String answer) {
+    public static Chat chatbotOf(Long chatRoomId, String answer) {
         return Chat.builder()
-                .type(ChatType.ANSWER)
+                .type(ChatType.CHATBOT)
                 .data(
                         AnswerChatData.builder()
                                 .answer(answer)

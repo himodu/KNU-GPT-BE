@@ -37,6 +37,10 @@ spring:
           starttls:
             enable: true
 
+llm:
+  server:
+    host: ${LLM_SERVER_HOST}
+
 logging:
   level:
     org.hibernate:

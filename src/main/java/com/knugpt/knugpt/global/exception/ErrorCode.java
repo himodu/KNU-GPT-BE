@@ -34,6 +34,7 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),
     EMAIL_SEND_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "이메일 전송 오류입니다."),
     INTERNAL_DATA_ERROR(50002, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 데이터 에러입니다."),
+    LLM_SERVER_ERROR(50003, HttpStatus.INTERNAL_SERVER_ERROR, "LLM 서버 오류입니다.")
     ;
 
     private final Integer code;

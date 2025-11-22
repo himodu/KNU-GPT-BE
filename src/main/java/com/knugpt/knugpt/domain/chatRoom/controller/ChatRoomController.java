@@ -33,8 +33,7 @@ public class ChatRoomController {
     public ResponseDto<ChatRoomCreatedResponse> getUserInfos(
             @Parameter(hidden = true) @UserId Long userId,
             @Valid @RequestBody ChatRoomCreateRequest request
-
-            ) {
+    ) {
         return ResponseDto.created(chatRoomService.createChatRoom(userId, request));
     }
 
@@ -49,8 +48,8 @@ public class ChatRoomController {
     @GetMapping("")
     public ResponseDto<ChatRoomListResponse> getChatRooms(
             @Parameter(hidden = true) @UserId Long userId,
-            @RequestParam("page") Integer page,
-            @RequestParam("size") Integer size
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size
     ) {
         return ResponseDto.ok(chatRoomService.getChatRooms(userId, page, size));
     }

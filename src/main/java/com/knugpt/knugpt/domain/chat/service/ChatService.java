@@ -2,7 +2,7 @@ package com.knugpt.knugpt.domain.chat.service;
 
 import com.knugpt.knugpt.domain.llm.LlmClient;
 import com.knugpt.knugpt.domain.chat.dto.request.ChatQueryRequest;
-import com.knugpt.knugpt.domain.chat.dto.response.AnswerChatResponse;
+import com.knugpt.knugpt.domain.chat.dto.response.ChatAnswerResponse;
 import com.knugpt.knugpt.domain.chat.dto.response.ChatListResponse;
 import com.knugpt.knugpt.domain.chat.mongo.Chat;
 import com.knugpt.knugpt.domain.chat.repository.ChatRepository;
@@ -26,10 +26,11 @@ public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
     private final LlmClient lLmClient;
 
-    @Transactional
-    public AnswerChatResponse queryToChatBotByUser(Long userId, Long chatRoomId, ChatQueryRequest request) {
-        // TODO - 채팅 로직 구현 : 일단은 한 번에 다 보내는 식으로 구현하고 추후 SSE 적용해서 리팩토링하자
+    private final static String LLM_SERVER_ERROR_MESSAGE = "죄송합니다. 서버 오류로 답변드리지 못합니다.";
 
+    @Transactional
+    public ChatAnswerResponse queryToChatBotByUser(Long userId, Long chatRoomId, ChatQueryRequest request) {
+        // TODO - 채팅 로직 구현 : 일단은 한 번에 다 보내는 식으로 구현하고 추후 SSE 적용해서 리팩토링하자
         // 1. 채팅방 조회
         ChatRoom chatRoom = chatRoomRepository.findByIdAndUserId(chatRoomId, userId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_CHAT_ROOM));
@@ -54,6 +55,9 @@ public class ChatService {
                 chatPage.getContent(),
                 request.question()
         );
+        if (answer == null || answer.isBlank()) {
+            answer = LLM_SERVER_ERROR_MESSAGE;
+        }
         chatRepository.save(
                 Chat.chatbotOf(
                         chatRoomId,
@@ -62,12 +66,15 @@ public class ChatService {
         );
 
         // 5. 결과 반환
-        return AnswerChatResponse.of(answer);
+        return ChatAnswerResponse.of(answer);
     }
 
-    public AnswerChatResponse queryToChatBotByNotUser(ChatQueryRequest request) {
+    public ChatAnswerResponse queryToChatBotByNotUser(ChatQueryRequest request) {
         String answer  = lLmClient.queryToChatBotWithoutUserInfo(request.question());
-        return AnswerChatResponse.of(answer);
+        if (answer == null || answer.isBlank()) {
+            answer = LLM_SERVER_ERROR_MESSAGE;
+        }
+        return ChatAnswerResponse.of(answer);
     }
 
     public ChatListResponse getChats(Long userId, Long chatRoomId, Integer page, Integer size) {

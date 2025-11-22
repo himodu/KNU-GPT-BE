@@ -1,7 +1,7 @@
 package com.knugpt.knugpt.domain.chat.controller;
 
 import com.knugpt.knugpt.domain.chat.dto.request.ChatQueryRequest;
-import com.knugpt.knugpt.domain.chat.dto.response.AnswerChatResponse;
+import com.knugpt.knugpt.domain.chat.dto.response.ChatAnswerResponse;
 import com.knugpt.knugpt.domain.chat.dto.response.ChatListResponse;
 import com.knugpt.knugpt.domain.chat.service.ChatService;
 import com.knugpt.knugpt.global.annotation.UserId;
@@ -27,7 +27,7 @@ public class ChatController {
             }
     )
     @PostMapping("/chat-rooms/{chatRoomId}/chats")
-    public ResponseDto<AnswerChatResponse> queryToChatBotByUser(
+    public ResponseDto<ChatAnswerResponse> queryToChatBotByUser(
             @Parameter(hidden = true) @UserId Long userId,
             @PathVariable("chatRoomId") Long chatRoomId,
             @Valid @RequestBody ChatQueryRequest request
@@ -43,7 +43,7 @@ public class ChatController {
             }
     )
     @PostMapping("/chats")
-    public ResponseDto<AnswerChatResponse> queryToChatBot(
+    public ResponseDto<ChatAnswerResponse> queryToChatBot(
             @Valid @RequestBody ChatQueryRequest request
     ) {
         return ResponseDto.ok(chatService.queryToChatBotByNotUser(request));
@@ -66,7 +66,5 @@ public class ChatController {
     ) {
         return ResponseDto.ok(chatService.getChats(userId, chatRoomId, page, size));
     }
-
-
 
 }

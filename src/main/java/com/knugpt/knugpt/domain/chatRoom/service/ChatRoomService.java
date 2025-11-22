@@ -37,7 +37,7 @@ public class ChatRoomService {
 
         ChatRoom chatRoom = chatRoomRepository.save(
                 ChatRoom.builder()
-                        .title(request.firstQuery())
+                        .title("제목 없음")
                         .user(user)
                         .build()
         );

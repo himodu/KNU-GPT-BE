@@ -8,15 +8,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class LlmChatBotAnswerResponse extends SelfValidating<LlmChatBotAnswerResponse> {
-    @NotNull
-    @Schema(description = "챗봇 응답")
-    private final String answer;
 
-    @Builder
-    public LlmChatBotAnswerResponse(String answer) {
-        this.answer = answer;
-    }
-}
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public record LlmChatBotAnswerResponse(
+        @NotNull
+        @Schema(description = "챗봇 응답")
+        String answer
+) {}

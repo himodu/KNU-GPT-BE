@@ -11,18 +11,18 @@ import lombok.Getter;
 @Getter
 @Schema(description = "질문 응답 채팅 정보")
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AnswerChatResponse extends SelfValidating<AnswerChatResponse> {
+public class ChatAnswerResponse extends SelfValidating<ChatAnswerResponse> {
     @NotNull
     @Schema(description = "질문 응답")
     private final String answer;
 
     @Builder
-    public AnswerChatResponse(String answer) {
+    public ChatAnswerResponse(String answer) {
         this.answer = answer;
     }
 
-    public static AnswerChatResponse of(String answer) {
-        return AnswerChatResponse.builder()
+    public static ChatAnswerResponse of(String answer) {
+        return ChatAnswerResponse.builder()
                 .answer(answer)
                 .build();
     }

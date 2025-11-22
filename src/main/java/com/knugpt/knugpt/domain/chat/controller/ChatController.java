@@ -20,19 +20,33 @@ public class ChatController {
     private final ChatService chatService;
 
     @Operation(
-            summary = "챗봇에게 채팅을 전송합니다.",
-            description = "챗봇에게 채팅을 전송합니다.",
+            summary = "[회원] 챗봇에게 채팅을 전송합니다.",
+            description = "[회원] 챗봇에게 채팅을 전송합니다.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "챗봇에게 응답 수신 성공"),
             }
     )
     @PostMapping("/chat-rooms/{chatRoomId}/chats")
-    public ResponseDto<AnswerChatResponse> queryToChatBot(
+    public ResponseDto<AnswerChatResponse> queryToChatBotByUser(
             @Parameter(hidden = true) @UserId Long userId,
             @PathVariable("chatRoomId") Long chatRoomId,
             @Valid @RequestBody ChatQueryRequest request
     ) {
-        return ResponseDto.ok(chatService.queryToChatBot(userId, chatRoomId, request));
+        return ResponseDto.ok(chatService.queryToChatBotByUser(userId, chatRoomId, request));
+    }
+
+    @Operation(
+            summary = "[비회원] 챗봇에게 채팅을 전송합니다.",
+            description = "[비회원] 챗봇에게 채팅을 전송합니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "챗봇에게 응답 수신 성공"),
+            }
+    )
+    @PostMapping("/chats")
+    public ResponseDto<AnswerChatResponse> queryToChatBot(
+            @Valid @RequestBody ChatQueryRequest request
+    ) {
+        return ResponseDto.ok(chatService.queryToChatBotByNotUser(request));
     }
 
 

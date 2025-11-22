@@ -27,7 +27,7 @@ public class ChatService {
     private final LLmClient lLmClient;
 
     @Transactional
-    public AnswerChatResponse queryToChatBot(Long userId, Long chatRoomId, ChatQueryRequest request) {
+    public AnswerChatResponse queryToChatBotByUser(Long userId, Long chatRoomId, ChatQueryRequest request) {
         // TODO - 채팅 로직 구현 : 일단은 한 번에 다 보내는 식으로 구현하고 추후 SSE 적용해서 리팩토링하자
 
         // 1. 채팅방 조회
@@ -65,6 +65,11 @@ public class ChatService {
         return AnswerChatResponse.of(answer);
     }
 
+    public AnswerChatResponse queryToChatBotByNotUser(ChatQueryRequest request) {
+        String answer  = lLmClient.queryToChatBotWithoutUserInfo(request.question());
+        return AnswerChatResponse.of(answer);
+    }
+
     public ChatListResponse getChats(Long userId, Long chatRoomId, Integer page, Integer size) {
         if(!chatRoomRepository.existsByIdAndUserId(chatRoomId, userId)) {
             throw new CommonException(ErrorCode.NOT_FOUND_CHAT_ROOM);
@@ -76,6 +81,8 @@ public class ChatService {
 
         return ChatListResponse.of(chatPage);
     }
+
+
 
 
 }

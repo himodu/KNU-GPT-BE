@@ -1,6 +1,6 @@
 package com.knugpt.knugpt.domain.chat.service;
 
-import com.knugpt.knugpt.domain.llm.LLmClient;
+import com.knugpt.knugpt.domain.llm.LlmClient;
 import com.knugpt.knugpt.domain.chat.dto.request.ChatQueryRequest;
 import com.knugpt.knugpt.domain.chat.dto.response.AnswerChatResponse;
 import com.knugpt.knugpt.domain.chat.dto.response.ChatListResponse;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 public class ChatService {
     private final ChatRepository chatRepository;
     private final ChatRoomRepository chatRoomRepository;
-    private final LLmClient lLmClient;
+    private final LlmClient lLmClient;
 
     @Transactional
     public AnswerChatResponse queryToChatBotByUser(Long userId, Long chatRoomId, ChatQueryRequest request) {

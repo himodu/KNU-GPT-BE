@@ -13,7 +13,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class LLmClient {
+public class LlmClient {
     @Value("${llm.server.host}")
     private String aiServerHost;
 
@@ -36,7 +36,6 @@ public class LLmClient {
     public String queryToChatBotWithoutUserInfo(String question) {
         // 1. 비회원 전용 요청 객체 생성
         LlmChatBotQueryRequest request = LlmChatBotQueryRequest.onlyQuestionOf(question);
-        System.out.println(aiServerHost);
 
         // 2. LLM 서버 호출 및 반환
         return webClient.post()

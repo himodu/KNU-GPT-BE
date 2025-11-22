@@ -47,4 +47,17 @@ public class LLmClient {
                 .block();
     }
 
+    public String summarizeQueryForTitle(String question) {
+        LlmChatBotQueryRequest request = LlmChatBotQueryRequest.onlyQuestionOf(question);
+
+        // 2. LLM 서버 호출 및 반환
+        return webClient.post()
+                .uri(String.format(aiServerHost, "/title"))
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(LlmChatBotAnswerResponse.class)
+                .map(LlmChatBotAnswerResponse::getAnswer)
+                .block();
+    }
+
 }

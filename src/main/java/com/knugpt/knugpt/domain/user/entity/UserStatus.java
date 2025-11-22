@@ -9,7 +9,7 @@ public enum UserStatus {
     GRADE1("GRADE1", "1학년 재학"),
     GRADE2("GRADE2", "2학년 재학"),
     GRADE3("GRADE3", "3학년 재학"),
-    GARDE4("GRADE4", "4학년 재학"),
+    GRADE4("GRADE4", "4학년 재학"),
     BREAKE("BRAKE", "휴학 중"),
     EXCEED("EXCEED", "초과 학기"),
     DEFERRED("DEFERRED", "졸업 유예"),

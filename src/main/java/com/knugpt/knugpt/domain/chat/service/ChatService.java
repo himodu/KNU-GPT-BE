@@ -82,7 +82,4 @@ public class ChatService {
         return ChatListResponse.of(chatPage);
     }
 
-
-
-
 }

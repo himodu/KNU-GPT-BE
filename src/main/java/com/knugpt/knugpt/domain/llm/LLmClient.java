@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LLmClient {
     @Value("${llm.server.host}")
-    private static String aiServerHost;
+    private String aiServerHost;
 
     private final WebClient webClient;
 
@@ -25,7 +25,7 @@ public class LLmClient {
 
         // 2. LLM 서버 호출 및 반환
         return webClient.post()
-                .uri(String.format(aiServerHost, "/search"))
+                .uri(aiServerHost, "/search")
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(LlmChatBotAnswerResponse.class)
@@ -36,10 +36,11 @@ public class LLmClient {
     public String queryToChatBotWithoutUserInfo(String question) {
         // 1. 비회원 전용 요청 객체 생성
         LlmChatBotQueryRequest request = LlmChatBotQueryRequest.onlyQuestionOf(question);
+        System.out.println(aiServerHost);
 
         // 2. LLM 서버 호출 및 반환
         return webClient.post()
-                .uri(String.format(aiServerHost, "/search"))
+                .uri(aiServerHost + "/search")
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(LlmChatBotAnswerResponse.class)

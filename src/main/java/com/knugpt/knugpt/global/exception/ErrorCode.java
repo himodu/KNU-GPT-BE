@@ -19,6 +19,7 @@ public enum ErrorCode {
     INVALID_PARAMETER_FORMAT(40001, HttpStatus.BAD_REQUEST, "요청에 유효하지 않은 인자 형식입니다."),
     INVALID_ARGUMENT(40002, HttpStatus.BAD_REQUEST, "유효하지 않은 인자입니다."),
     ALREADY_HAVE_LIKE(40003, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다."),
+    BAD_REQUEST_JSON(40004, HttpStatus.BAD_REQUEST, "json 형식이 맞지 않습니다."),
 
     // Access Denied Error
     ACCESS_DENIED(40300, HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),

@@ -1,82 +1,43 @@
-# KNU-GPT Server
-KNU-GPT Server Repository입니다.
+# KNU GPT server 시스템 개요
 
-# GitHub Role
-해당 Repository는 다음과 같은 규칙을 따르고 있습니다.
+본 프로젝트는 **WAS 서버(Spring Boot)** 와 **LLM 챗봇 서버(FastAPI)**로 분리된 구조를 가지며,
+사용자 인증부터 AI 기반 정보 검색까지 통합적으로 제공하는 서비스입니다.
 
-## GitHub Branch
-### Flow Strategy
-<img src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_6_BE/assets/62001944/8ca18848-1286-4610-afd4-3a39e1270be9" width="600">
+## 🛠 1. WAS 서버 (Spring Boot 기반)
+### 🔐 인증 및 보안
+- Spring Security 기반 인증 시스템 구현 완료
+- 이메일 인증 방식 사용
+- 사용자가 이메일 입력 시 인증번호(4자리)를 전송
+- 인증번호 입력 후 본인 인증 완료
+- 인증 유효 시간: 3분
+- 인증 완료 후 회원 가입을 진행하며, 다음 정보 입력 가능:
+    ```닉네임```, ```학과```, ```학점```, ```재학 여부```, ```추가 정보``` 등
 
-- 사용자는 먼저 Upstream Repository를 자신의 GitHub 계정으로 포크(fork)하고, 이 포크(fork)된 Origin Repository를 로컬 컴퓨터로 **Clone**하여 작업합니다.
+### 👤 사용자 정보 관리
+- 로그인 후 사용자 정보 조회 및 수정 기능 제공
+- JWT(Json Web Token)를 HTTP Header에 포함하여 인증 및 권한 관리
+- 모든 API 호출 시 JWT 기반으로 사용자 식별 및 접근 제어 수행
 
-- 그 후 개발한 변경 사항을 Origin Repository로 **Push**합니다. 이후 Upstream Repository로 풀 **PR**를 보내 변경 사항을 제안합니다.
+### 💬 챗봇 채팅 
+- 별도의 엔드포인트로 분리하여 비회원/회원 기능을 나누어 제공
+- 비회원의 경우 요청한 질문에 대해서만 저장된 데이터를 기반으로 응답받음
+- 회원의 경우
+  - 이전 채팅 내역들을 채팅방으로 관리할 수 있음
+  - 이전 대화 내용을 기억함
+  - 사용자의 개인 정보를 고려함 
 
-- PR이 완료 된 후 Upstream Repository의 최신 변경 사항을 가져오기 위해 Local에서 풀(pull)을 사용합니다.
+## 🤖 2. LLM 챗봇 서버 (FastAPI 기반)
+### 💡 서버 환경 및 구조
+- FastAPI + Uvicorn 기반의 Python API 서버
+- 사용자 학사 정보를 벡터 기반으로 검색하는 기능 구현
+- 비동기 기반 구조로 다중 사용자 동시 요청에도 안정적인 성능 제공
 
-### 개발을 시작할 때
-<img src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_6_BE/assets/62001944/a5380849-5d07-47cc-9a24-ecef533c606d" width="600">
+🔎 검색 및 응답 기능
+- 전체 트리 구조 반환 : 대학 → 단과대학 → 학과 → 세부 항목 등 정보의 계층 구조를 트리 형태로 제공하여 검색 범위 지정 가능
+- 벡터 기반 유사도 검색 : 사용자가 지정한 경로의 모든 하위 항목을 벡터 인덱스로 복원하여 FAISS를 통해 유사도 계산 후 임계값 이상의 결과 반환
+- 결과 후처리 : 검색된 문서의 점수를 기준으로 정렬 및 필터링하여 챗봇 응답에 적합한 형태로 변환
 
-1. 개발을 시작할 때는 Upstream Repository에서 Issue를 생성합니다.
-2. 이후 Issue에서 Origin Repository의 Dev Branch에서 새로운 Branch를 생성합니다
-    - 이때 브랜치 이름은 다음을 따릅니다.
-    - **새로운 기능 개발 : feature/#[Issue의 번호]**
-    - **버그 픽스 : fix/#[Issue의 번호]**
-    - **기능 리팩토링 : refactor/#[Issue의 번호]**
-3. Loacl에서 Fetch를 통해 만든 New Branch(feature or fix or refactor)을 들고옵니다.
-4. 해당 Branch로 checkout 이후 기능 개발을 진행합니다.
-
-### 개발을 종료할 때
-<img src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_6_BE/assets/62001944/0c0d26c6-3fec-4b20-aa02-6c91dee7a024" width="600">
-
-1. 기능 개발이 종료되면 Origin Repository의 Branch(feature or fix or refactor)로 변경 사항을 Push 합니다.
-2. Origin Repository에서 Upstream Repository로 PR을 보냅니다.
-3. Code Review 이후 마지막으로 Approve한 사람은 ***Squash And Merge***를 합니다.
-4. PR이 ***Squash And Merge***되면 Local에서는 dev Branch로 checkout합니다.
-5. Local에서 Upstream Repository의 dev Branch를 pull 받습니다.
-6. 마지막으로 Origin Repository의 dev Branch를 Update하기 위해 Push를 해줍니다.
-
-### Main Branch가 갱신될 때
-<img src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_6_BE/assets/62001944/530dd292-8894-400a-bb77-fbfdd6946f17" width="600">
-
-1. 만약 Release Version을 낼 때는 Upstream의 dev Branch에서 main Branch로 PR을 날립니다.
-2. 해당 Repository의 모든 사용자가 Code를 재확인한 후 Merge를 합니다.
-
-## Branch Naming Convention
-| Commit Type | Description  |
-|-------------|--------------|
-| main        | 테스트 완료 후 배포용 |
-| dev         | 개발 커밋 통합용    |
-| feat        | 기능 개발용       |
-| fix         | 버그 수정용       |
-| refactor    | 코드 리팩토링      |
-
-## Commit Convention
-| Commit Type | Description |
-| --- | --- |
-| feat | Add new features |
-| fix | Fix bugs |
-| docs | Modify documentation |
-| style | Code formatting, missing semicolons, no changes to the code itself |
-| refactor | Code refactoring |
-| test | Add test code, refactor test code |
-| chore | Modify package manager, and other miscellaneous changes (e.g., .gitignore) |
-| design | Change user UI design, such as CSS |
-| comment | Add or modify necessary comments |
-| rename | Only changes to file or folder names or locations |
-| remove | Only performing the action of deleting files |
-
-## PR Convention
-| Icon | Code                       | Description                       |
-|------|----------------------------|-----------------------------------|
-| 🎨   | :art                       | Improve code structure/formatting |
-| ⚡️   | :zap                       | Performance improvement           |
-| 🔥   | :fire                      | Delete code/files                 |
-| 🐛   | :bug                       | Fix bugs                          |
-| 🚑   | :ambulance                 | Urgent fixes                      |
-| ✨    | :sparkles                  | Introduce new features            |
-| 💄   | :lipstick                  | Add/modify UI/style files         |
-| ⏪    | :rewind                    | Revert changes                    |
-| 🔀   | :twisted_rightwards_arrows | Merge branches                    |
-| 💡   | :bulb                      | Add/modify comments               |
-| 🗃   | :card_file_box             | Database-related changes          |
+### 🚀 3. 성능 및 안정성
+- FastAPI의 Async I/O 기반 처리로 응답 속도 최적화
+- 다중 클라이언트의 동시 검색 요청에도 성능 저하 없이 안정적 대응
+- 검색 요청 처리 과정에서 CPU 연산과 I/O 작업을 효율적으로 분리하여 운영

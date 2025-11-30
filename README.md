@@ -1,7 +1,11 @@
 # KNU GPT server 시스템 개요
 
-본 프로젝트는 **WAS 서버(Spring Boot)** 와 **LLM 챗봇 서버(FastAPI)**로 분리된 구조를 가지며,
+본 프로젝트는 **WAS 서버(Spring Boot)** 와 **LLM 챗봇 서버(FastAPI)** 로 분리된 구조를 가지며,
 사용자 인증부터 AI 기반 정보 검색까지 통합적으로 제공하는 서비스입니다.
+## 전체 아키텍처
+<img width="2338" height="827" alt="KakaoTalk_20251011_231335557" src="https://github.com/user-attachments/assets/41763488-5f01-494a-970c-6061fd2c8a4e" />
+
+
 
 ## 🛠 1. WAS 서버 (Spring Boot 기반)
 ### 🔐 인증 및 보안

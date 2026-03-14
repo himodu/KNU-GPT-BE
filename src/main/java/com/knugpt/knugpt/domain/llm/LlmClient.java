@@ -89,13 +89,6 @@ public class LlmClient {
                 .bodyValue(request)
                 .retrieve()
                 .bodyToFlux(new ParameterizedTypeReference<ServerSentEvent<String>>() {})
-                .doOnSubscribe(s -> log.info("LLM 스트리밍 요청 시작: uri={}", aiServerHost + uriPath))
-                .doOnNext(event -> log.info(
-                        "SSE 수신 event={}, id={}, data={}",
-                        event.event(),
-                        event.id(),
-                        event.data()
-                ))
                 .flatMap(event -> {
                     String data = event.data();
                     if (data == null || data.isBlank()) {
@@ -126,8 +119,6 @@ public class LlmClient {
                         return Flux.error(e);
                     }
                 })
-                .doOnNext(chunk -> log.info("최종 chunk 방출: {}", chunk))
-                .doOnComplete(() -> log.info("클라이언트 스트림 완료"))
                 .doOnError(e -> log.error("LLM 서버 스트리밍 도중 {} 를 반환 : {}", getSimpleName(e), e.getMessage()));
     }
 

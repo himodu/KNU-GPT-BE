@@ -8,9 +8,12 @@ import com.knugpt.knugpt.global.security.filter.JwtExceptionFilter;
 import com.knugpt.knugpt.global.security.handler.JwtAccessDeniedHandler;
 import com.knugpt.knugpt.global.security.handler.JwtAuthEntryPoint;
 import com.knugpt.knugpt.global.security.jwt.JwtTokenProvider;
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -62,6 +65,36 @@ public class SecurityConfig {
     public JwtExceptionFilter jwtExceptionFilter() {return new JwtExceptionFilter();}
 
     @Bean
+    @Order(1) // webflux 스트리밍 전용
+    public SecurityFilterChain chatStreamSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher(Constants.STREAMING_AUTH_URLS.toArray(String[]::new))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                        .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.ERROR).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/chat-rooms/*/chats/stream").authenticated()
+                        .anyRequest().denyAll()
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(jwtAuthEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                )
+                .addFilterBefore(jwtAuthorizationFilter(), LogoutFilter.class)
+                .addFilterBefore(jwtExceptionFilter(), JwtAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+
+    @Bean
+    @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .cors(httpSecurityCorsConfigurer ->

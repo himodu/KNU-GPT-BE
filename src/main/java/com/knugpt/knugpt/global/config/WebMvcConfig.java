@@ -29,7 +29,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(this.userIdInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns(Constants.NO_NEED_AUTH_URLS);
+                .excludePathPatterns(Constants.NO_NEED_AUTH_URLS)
+                .excludePathPatterns(Constants.STREAMING_AUTH_URLS)
+        ;
     }
 
 }

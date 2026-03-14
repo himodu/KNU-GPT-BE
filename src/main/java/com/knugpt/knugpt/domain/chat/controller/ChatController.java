@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerSentEvent;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
@@ -50,8 +51,8 @@ public class ChatController {
     )
     @PostMapping(value = "/chat-rooms/{chatRoomId}/chats/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<ChatStreamResponse>> queryToChatBotByUserWithStream(
-            @Parameter(hidden = true) @UserId Long userId,
-            @PathVariable Long chatRoomId,
+            @AuthenticationPrincipal(expression = "userId") Long userId,
+            @PathVariable("chatRoomId") Long chatRoomId,
             @Valid @RequestBody ChatQueryRequest request
     ) {
         return chatStreamService.queryToChatBotByUserWithStream(userId, chatRoomId, request);

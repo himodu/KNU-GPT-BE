@@ -46,7 +46,7 @@ public class ChatService {
 
         // 3. 사용자 정보 및 이전 채팅 기록 불러오기
         User user = chatRoom.getUser();
-        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Chat> chatPage = chatRepository.findAllByChatRoomId(chatRoomId, pageable);
 
         // 4. LLM 챗봇 응답 수신 및 채팅에 저장

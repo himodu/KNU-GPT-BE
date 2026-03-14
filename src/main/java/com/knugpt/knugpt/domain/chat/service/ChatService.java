@@ -11,13 +11,18 @@ import com.knugpt.knugpt.domain.chatRoom.repository.ChatRoomRepository;
 import com.knugpt.knugpt.domain.user.entity.User;
 import com.knugpt.knugpt.global.exception.CommonException;
 import com.knugpt.knugpt.global.exception.ErrorCode;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +30,12 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final LlmClient lLmClient;
+    private final WebClient webClient;
 
     private final static String LLM_SERVER_ERROR_MESSAGE = "죄송합니다. 서버 오류로 답변드리지 못합니다.";
 
     @Transactional
     public ChatAnswerResponse queryToChatBotByUser(Long userId, Long chatRoomId, ChatQueryRequest request) {
-        // TODO - 채팅 로직 구현 : 일단은 한 번에 다 보내는 식으로 구현하고 추후 SSE 적용해서 리팩토링하자
         // 1. 채팅방 조회
         ChatRoom chatRoom = chatRoomRepository.findByIdAndUserId(chatRoomId, userId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_CHAT_ROOM));

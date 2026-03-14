@@ -17,9 +17,10 @@ import java.util.Map;
 public record LlmChatBotQueryRequest(
         String question,
         List<Map<String, String>> previousChatHistories,
-        Map<String, Object> privateInfo
+        Map<String, Object> privateInfo,
+        Boolean stream
 ) {
-    public static LlmChatBotQueryRequest of(User user, List<Chat> chats, String question) {
+    public static LlmChatBotQueryRequest of(User user, List<Chat> chats, String question, Boolean stream) {
         return LlmChatBotQueryRequest.builder()
                 .question(question)
                 .previousChatHistories(
@@ -40,12 +41,14 @@ public record LlmChatBotQueryRequest(
                                 "introduction", user.getIntroduction() != null ? user.getIntroduction() : "모름"
                         ) : null
                 )
+                .stream(stream)
                 .build();
     }
 
-    public static LlmChatBotQueryRequest onlyQuestionOf(String question) {
+    public static LlmChatBotQueryRequest onlyQuestionOf(String question, Boolean stream) {
         return LlmChatBotQueryRequest.builder()
                 .question(question)
+                .stream(stream)
                 .build();
     }
 

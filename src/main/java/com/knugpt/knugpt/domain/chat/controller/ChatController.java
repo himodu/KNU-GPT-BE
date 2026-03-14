@@ -3,6 +3,8 @@ package com.knugpt.knugpt.domain.chat.controller;
 import com.knugpt.knugpt.domain.chat.dto.request.ChatQueryRequest;
 import com.knugpt.knugpt.domain.chat.dto.response.ChatAnswerResponse;
 import com.knugpt.knugpt.domain.chat.dto.response.ChatListResponse;
+import com.knugpt.knugpt.domain.chat.dto.response.ChatStreamResponse;
+import com.knugpt.knugpt.domain.chat.service.ChatStreamService;
 import com.knugpt.knugpt.domain.chat.service.ChatService;
 import com.knugpt.knugpt.global.annotation.UserId;
 import com.knugpt.knugpt.global.common.ResponseDto;
@@ -11,13 +13,17 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
 public class ChatController {
     private final ChatService chatService;
+    private final ChatStreamService chatStreamService;
 
     @Operation(
             summary = "[회원] 챗봇에게 채팅을 전송합니다.",
@@ -36,6 +42,22 @@ public class ChatController {
     }
 
     @Operation(
+            summary = "[회원] 챗봇에게 채팅을 스트리밍으로 전송합니다.",
+            description = "[회원] 챗봇에게 채팅을 스트리밍으로 전송합니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "챗봇에게 응답 수신 성공"),
+            }
+    )
+    @PostMapping(value = "/chat-rooms/{chatRoomId}/chats/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<ServerSentEvent<ChatStreamResponse>> queryToChatBotByUserWithStream(
+            @Parameter(hidden = true) @UserId Long userId,
+            @PathVariable Long chatRoomId,
+            @Valid @RequestBody ChatQueryRequest request
+    ) {
+        return chatStreamService.queryToChatBotByUserWithStream(userId, chatRoomId, request);
+    }
+
+    @Operation(
             summary = "[비회원] 챗봇에게 채팅을 전송합니다.",
             description = "[비회원] 챗봇에게 채팅을 전송합니다.",
             responses = {
@@ -43,12 +65,25 @@ public class ChatController {
             }
     )
     @PostMapping("/chats")
-    public ResponseDto<ChatAnswerResponse> queryToChatBot(
+    public ResponseDto<ChatAnswerResponse> queryToChatBotByNotUser(
             @Valid @RequestBody ChatQueryRequest request
     ) {
         return ResponseDto.ok(chatService.queryToChatBotByNotUser(request));
     }
 
+    @Operation(
+            summary = "[비회원] 챗봇에게 스트리밍으로 채팅을 전송합니다.",
+            description = "[비회원] 챗봇에게 스트리밍으로 채팅을 전송합니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "챗봇에게 응답 수신 성공"),
+            }
+    )
+    @PostMapping("/chats/stream")
+    public Flux<ServerSentEvent<ChatStreamResponse>> queryToChatBotByNotUserWithStream(
+            @Valid @RequestBody ChatQueryRequest request
+    ) {
+        return chatStreamService.queryToChatBotByNotUserWithStream(request);
+    }
 
     @Operation(
             summary = "채팅방 채팅 목록 조회",
